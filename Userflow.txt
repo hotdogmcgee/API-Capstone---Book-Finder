@@ -1,0 +1,14 @@
+USER FLOW
+
+1. Distinct Views
+    a. Opening page with explanation of app, has search field available.
+    b. Recommendations given, user prompted to enter address/zip code to see if a local library has a copy.
+    c. Copies of books available in local libraries.
+    d. --maybe-- a page to show saved searches.
+
+2. Three-part Flow
+    a. User sees how to use app and search field.  This will be either the only thing to do or by far the largest thing. 
+        After entering search with parameters, user will be shown results.
+    b. User sees recommendations and prompted to enter address/zip code.  After entering, will be taken to "c".
+    c. User sees a list of local copies, biased towards proximity (hopefully).  Can click through to those copies, or enter a new search term or address.
+
