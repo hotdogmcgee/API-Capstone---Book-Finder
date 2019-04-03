@@ -2,6 +2,7 @@
 
 const apiKeyNYT = '5EbHFVJ0Kq7H1XibGz9LwkMzwt7sxBxi'; 
 const nyt_searchURL = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
+const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json'
 const libcloud_searchURL = 'http://api.lib.harvard.edu/v2/items'
 
 
@@ -41,13 +42,14 @@ function displayResults(responseJson) {
 };
 
 //uses NYT API to get back list of book results, will be shown on screen 2
-function nytGetBooks(query, maxResults=10) {
+function nytGetBooks(query, genreQuery) {
   const params = {
     published_date: query,
     'api-key': apiKeyNYT,
+    list: genreQuery,
   };
   const queryString = formatQueryParams(params)
-  const url = nyt_searchURL + '?' + queryString;
+  const url = nyt_v2_searchURL + '?' + queryString;
   console.log(url);
 
   fetch(url)
@@ -88,10 +90,10 @@ function libCloudGetBooks(query) {
 function showBooks() {
   $('form').submit(event => {
     event.preventDefault();
+    const searchDate = $('#js-search-date').val();
     const searchTerm = $('#js-search-term').val();
     console.log(searchTerm);
-    const maxResults = $('#js-max-results').val();
-    nytGetBooks(searchTerm, maxResults);
+    nytGetBooks(searchDate, searchTerm);
   });
 }
 
