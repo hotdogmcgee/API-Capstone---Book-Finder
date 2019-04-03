@@ -1,9 +1,11 @@
 'use strict';
 
+//let ISBNRef;
 const apiKeyNYT = '5EbHFVJ0Kq7H1XibGz9LwkMzwt7sxBxi'; 
 const nyt_searchURL = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
 const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json'
-const libcloud_searchURL = 'http://api.lib.harvard.edu/v2/items'
+const libcloud_searchURL = 'http://webservices.lib.harvard.edu/rest/v3/hollis/mods/isbn/'
+
 
 
 function formatQueryParams(params) {
@@ -28,7 +30,9 @@ function displayResults(responseJson) {
       $('#results-list').append(
         `<li>
         <p>${listData[j].book_details[0].title}</p>
-        <button class="js-lib-click">click here</button>
+        <button class="js-lib-click">
+          <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
+          </button>
         </li>`
       )};
   
@@ -63,12 +67,12 @@ function nytGetBooks(query, genreQuery) {
     });
 }
 
-function libCloudGetBooks(query) {
+function libCloudGetBooks(ISBNRef) {
     const params = {
-        published_date: query,
+        jsonp: record,
       };
       const queryString = formatQueryParams(params)
-      const url = libcloud_searchURL + '?' + queryString;
+      const url = libcloud_searchURL + ISBNRef + '?' + queryString;
       console.log(url);
     
       fetch(url)
@@ -95,17 +99,20 @@ function showBooks() {
   });
 }
 
-function showLibResults() {
+function handleBookClick() {
     //watch for user click, take to new screen showing whether it is available
     $('#results-list').on('click', '.js-lib-click', function(event) {
         event.preventDefault();
         console.log('yoyoyoy');
+        const ISBNRef = $('.js-lib-click-exact').text();
+        console.log(ISBNRef);
+        //showLibResults();
 
     })
 }
 
 //point user in correct direction using Library Cloud API
-function handleLibCheck() {
+function showLibResults() {
     console.log('almost there');
     $('#results-list').empty();
     $('#results-list').append(
@@ -120,7 +127,7 @@ function handleLibCheck() {
 
 function watchForm() {
     showBooks();
-    showLibResults();
+    handleBookClick();
 }
 
 $(watchForm);
