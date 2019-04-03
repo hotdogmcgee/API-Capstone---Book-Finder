@@ -20,28 +20,35 @@ function displayResults(responseJson) {
   // iterate through the items array
   //need a way to display each book in each list
   for (let i = 0; i < responseJson.results.lists.length; i++){
+    console.log(listData[i].books)
     $('#results-list').append(
-      `<li><h3>${responseJson.results.published_date}</h3>
-      <p>${listData[i].list_name}</p>
-      <p>${listData[i].books[0].title}<p>
-      </li>`
-    )};
+      `<p>${responseJson.results.published_date}</p>
+      <h2>${listData[i].list_name}</h2>`
+    )
+    for (let j = 0; j < responseJson.results.lists[i].books.length; j++){
+      $('#results-list').append(
+        `<li>
+        <p>${listData[i].books[j].title}</p>
+        <button class="js-lib-click">click here</button>
+        </li>`
+      )};
+  }
+
     console.log('hello')
   //display the results section  
   $('#results').removeClass('hidden');
+  $('#js-error-message').addClass('hidden');
 };
 
 //uses NYT API to get back list of book results, will be shown on screen 2
-function getBooks(query, maxResults=10) {
+function nytGetBooks(query, maxResults=10) {
   const params = {
     published_date: query,
     'api-key': apiKeyNYT,
   };
   const queryString = formatQueryParams(params)
   const url = nyt_searchURL + '?' + queryString;
-
   console.log(url);
-
 
   fetch(url)
     .then(response => {
@@ -52,8 +59,29 @@ function getBooks(query, maxResults=10) {
     })
     .then(responseJson => displayResults(responseJson))
     .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+      console.log(err.message);
     });
+}
+
+function libCloudGetBooks(query) {
+    const params = {
+        published_date: query,
+      };
+      const queryString = formatQueryParams(params)
+      const url = libcloud_searchURL + '?' + queryString;
+      console.log(url);
+    
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(response.statusText);
+        })
+        .then(responseJson => displayResults(responseJson))
+        .catch(err => {
+          $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        });
 }
 
 
@@ -61,18 +89,38 @@ function showBooks() {
   $('form').submit(event => {
     event.preventDefault();
     const searchTerm = $('#js-search-term').val();
+    console.log(searchTerm);
     const maxResults = $('#js-max-results').val();
-    getBooks(searchTerm, maxResults);
+    nytGetBooks(searchTerm, maxResults);
   });
 }
 
 function showLibResults() {
     //watch for user click, take to new screen showing whether it is available
+    $('#results-list').on('click', '.js-lib-click', function(event) {
+        event.preventDefault();
+        console.log('yoyoyoy');
+
+    })
 }
+
+//point user in correct direction using Library Cloud API
+function handleLibCheck() {
+    console.log('almost there');
+    $('#results-list').empty();
+    $('#results-list').append(
+        `<li><h3>${responseJson.results.published_date}</h3>
+        <p>${listData[i].list_name}</p>
+        <p>${listData[i].books[0].title}</p>
+        <button class="js-lib-click">click here</button>
+        </li>`
+      )
+
+};
 
 function watchForm() {
     showBooks();
-    //showLibResults();
+    showLibResults();
 }
 
 $(watchForm);
