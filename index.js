@@ -14,26 +14,24 @@ function formatQueryParams(params) {
 
 function displayResults(responseJson) {
   // if there are previous results, remove them
-  console.log(responseJson.results.published_date)
+  console.log(responseJson.results[0].published_date)
   console.log(responseJson);
-  let listData = responseJson.results.lists;
+  let listData = responseJson.results
   $('#results-list').empty();
   // iterate through the items array
   //need a way to display each book in each list
-  for (let i = 0; i < responseJson.results.lists.length; i++){
-    console.log(listData[i].books)
-    $('#results-list').append(
-      `<p>${responseJson.results.published_date}</p>
-      <h2>${listData[i].list_name}</h2>`
-    )
-    for (let j = 0; j < responseJson.results.lists[i].books.length; j++){
+  $('#results-list').append(
+    `<p>${responseJson.results[0].published_date}</p>
+    <h2>${listData[0].list_name}</h2>`
+  )
+    for (let j = 0; j < responseJson.results.length; j++){
       $('#results-list').append(
         `<li>
-        <p>${listData[i].books[j].title}</p>
+        <p>${listData[j].book_details[0].title}</p>
         <button class="js-lib-click">click here</button>
         </li>`
       )};
-  }
+  
 
     console.log('hello')
   //display the results section  
@@ -44,7 +42,7 @@ function displayResults(responseJson) {
 //uses NYT API to get back list of book results, will be shown on screen 2
 function nytGetBooks(query, genreQuery) {
   const params = {
-    published_date: query,
+    'published-date': query,
     'api-key': apiKeyNYT,
     list: genreQuery,
   };
