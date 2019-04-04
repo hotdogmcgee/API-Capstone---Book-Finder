@@ -14,7 +14,7 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function displayResults(responseJson) {
+function displayNYTResults(responseJson) {
   // if there are previous results, remove them
   console.log(responseJson.results[0].published_date)
   console.log(responseJson);
@@ -61,18 +61,14 @@ function nytGetBooks(query, genreQuery) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayResults(responseJson))
+    .then(responseJson => displayNYTResults(responseJson))
     .catch(err => {
       console.log(err.message);
     });
 }
 
 function libCloudGetBooks(ISBNRef) {
-    const params = {
-        jsonp: record,
-      };
-      const queryString = formatQueryParams(params)
-      const url = libcloud_searchURL + ISBNRef + '?' + queryString;
+      const url = libcloud_searchURL + ISBNRef + '?jsonp=record'
       console.log(url);
     
       fetch(url)
@@ -82,14 +78,14 @@ function libCloudGetBooks(ISBNRef) {
           }
           throw new Error(response.statusText);
         })
-        .then(responseJson => displayResults(responseJson))
+        .then(responseJson => displayLibResults(responseJson))
         .catch(err => {
           $('#js-error-message').text(`Something went wrong: ${err.message}`);
         });
 }
 
 
-function showBooks() {
+function handleNYTBooks() {
   $('form').submit(event => {
     event.preventDefault();
     const searchDate = $('#js-search-date').val();
@@ -101,32 +97,48 @@ function showBooks() {
 
 function handleBookClick() {
     //watch for user click, take to new screen showing whether it is available
-    $('#results-list').on('click', '.js-lib-click', function(event) {
+    $('#results-list').on('click', '.js-lib-click-exact', function(event) {
         event.preventDefault();
         console.log('yoyoyoy');
         const ISBNRef = $('.js-lib-click-exact').text();
         console.log(ISBNRef);
-        //showLibResults();
+        libCloudGetBooks(ISBNRef);
 
     })
 }
 
 //point user in correct direction using Library Cloud API
-function showLibResults() {
+function displayLibResults() {
     console.log('almost there');
+    listData = responseJson.mods
     $('#results-list').empty();
     $('#results-list').append(
-        `<li><h3>${responseJson.results.published_date}</h3>
-        <p>${listData[i].list_name}</p>
-        <p>${listData[i].books[0].title}</p>
-        <button class="js-lib-click">click here</button>
+      //title
+      //author
+      //published date
+      //description
+      //where to find
+        `<li><h3>${listData.titleInfo[0].title}</h3>
+       
+        <p>${listData.name[0].namePart}</p>
+        <p>${listData.originInfo.dateIssued}</p>
+        <p>${listData.abstract.content}</p>
         </li>`
       )
+      for (let i = 0; i < listData.classification.length; i++) {
+        $('#results-list').append(
+          `<p>${listData.classification[i].authority}</p>
+           <p>${listData.classification[i].content}</p>
+          `
+        )
+      }
+          
+
 
 };
 
 function watchForm() {
-    showBooks();
+    handleNYTBooks();
     handleBookClick();
 }
 
