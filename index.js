@@ -119,7 +119,7 @@ function displayLibResults(responseJson) {
     $('#results-list').append(
         `<li><h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>
        
-        <p>${listData.name.namePart[0]}</p>
+        <p>${listData.name.namePart}</p>
         <p>${listData.location[0].shelfLocator}</p>
         </li>`
       )
