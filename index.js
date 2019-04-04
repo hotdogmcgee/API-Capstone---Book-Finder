@@ -4,7 +4,7 @@
 const apiKeyNYT = '5EbHFVJ0Kq7H1XibGz9LwkMzwt7sxBxi'; 
 const nyt_searchURL = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
 const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json'
-const libcloud_searchURL = 'http://webservices.lib.harvard.edu/rest/v3/hollis/mods/isbn/'
+const libcloud_searchURL = 'https://api.lib.harvard.edu/v2/items.json?identifier='
 
 
 
@@ -68,8 +68,9 @@ function nytGetBooks(query, genreQuery) {
 }
 
 function libCloudGetBooks(ISBNRef) {
-      const url = libcloud_searchURL + ISBNRef + '?jsonp=record'
+      const url = libcloud_searchURL + ISBNRef
       console.log(url);
+      console.log(ISBNRef);
     
       fetch(url)
         .then(response => {
@@ -97,41 +98,36 @@ function handleNYTBooks() {
 
 function handleBookClick() {
     //watch for user click, take to new screen showing whether it is available
-    $('#results-list').on('click', '.js-lib-click-exact', function(event) {
+    $('#results-list').on('click', '.js-lib-click', function(event) {
         event.preventDefault();
         console.log('yoyoyoy');
         const ISBNRef = $('.js-lib-click-exact').text();
         console.log(ISBNRef);
-        libCloudGetBooks(ISBNRef);
+        libCloudGetBooks(9789601426440);
 
     })
 }
 
 //point user in correct direction using Library Cloud API
-function displayLibResults() {
+function displayLibResults(responseJson) {
     console.log('almost there');
-    listData = responseJson.mods
+    const listData = responseJson.items.mods;
+    console.log(listData);
     $('#results-list').empty();
     $('#results-list').append(
-      //title
-      //author
-      //published date
-      //description
-      //where to find
-        `<li><h3>${listData.titleInfo[0].title}</h3>
+        `<li><h3>${listData.titleInfo.title}</h3>
        
-        <p>${listData.name[0].namePart}</p>
-        <p>${listData.originInfo.dateIssued}</p>
-        <p>${listData.abstract.content}</p>
+        <p>${listData.name.namePart[0]}</p>
+        <p>${listData.location[0].shelfLocator}</p>
         </li>`
       )
-      for (let i = 0; i < listData.classification.length; i++) {
-        $('#results-list').append(
-          `<p>${listData.classification[i].authority}</p>
-           <p>${listData.classification[i].content}</p>
-          `
-        )
-      }
+      // for (let i = 0; i < listData.classification.length; i++) {
+      //   $('#results-list').append(
+      //     `<p>${listData.classification[i].authority}</p>
+      //      <p>${listData.classification[i].content}</p>
+      //     `
+      //   )
+      // }
           
 
 
