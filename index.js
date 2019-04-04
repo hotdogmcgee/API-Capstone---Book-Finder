@@ -18,7 +18,8 @@ function displayNYTResults(responseJson) {
   // if there are previous results, remove them
   console.log(responseJson.results[0].published_date)
   console.log(responseJson);
-  let listData = responseJson.results
+  let listData = responseJson.results;
+  $('.js-results-header').text('Pick the book you want to find')
   $('#results-list').empty();
   // iterate through the items array
   //need a way to display each book in each list
@@ -101,9 +102,9 @@ function handleBookClick() {
     $('#results-list').on('click', '.js-lib-click', function(event) {
         event.preventDefault();
         console.log('yoyoyoy');
-        const ISBNRef = $('.js-lib-click-exact').text();
+        const ISBNRef = $(event.target).text();
         console.log(ISBNRef);
-        libCloudGetBooks(9789601426440);
+        libCloudGetBooks(ISBNRef);
 
     })
 }
@@ -113,9 +114,10 @@ function displayLibResults(responseJson) {
     console.log('almost there');
     const listData = responseJson.items.mods;
     console.log(listData);
+    $('.js-results-header').text('Find it here!')
     $('#results-list').empty();
     $('#results-list').append(
-        `<li><h3>${listData.titleInfo.title}</h3>
+        `<li><h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>
        
         <p>${listData.name.namePart[0]}</p>
         <p>${listData.location[0].shelfLocator}</p>
