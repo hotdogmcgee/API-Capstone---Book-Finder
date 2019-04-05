@@ -116,6 +116,17 @@ function displayLibResults(responseJson) {
     console.log(listData);
     $('.js-results-header').text('Find it here!')
     $('#results-list').empty();
+
+    if (listData.titleInfo.hasOwnProperty('nonSort') === true) {
+      $('#results-list').append(
+       `<h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}`
+      )
+    } else {
+      $('#results-list').append(
+        `<h3>${listData.titleInfo.title}`
+       )
+    }
+
     $('#results-list').append(
         `<li><h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>
        
@@ -123,6 +134,21 @@ function displayLibResults(responseJson) {
         <p>${listData.location[0].shelfLocator}</p>
         </li>`
       )
+    
+    console.log('for loop next')
+
+    for (let i = 0; i < listData.location.length; i++) {
+    if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true) {
+      const textVar = '.#text'
+      const stringVar = `listData.location[i].physicalLocation${textVar}`;
+      console.log(stringVar)
+      $('#results-list').append(
+        `<p>${stringVar}</p>`
+      )
+    }
+    console.log('for loop ran')
+  }
+
       // for (let i = 0; i < listData.classification.length; i++) {
       //   $('#results-list').append(
       //     `<p>${listData.classification[i].authority}</p>
