@@ -71,8 +71,7 @@ function nytGetBooks(query, genreQuery) {
 function libCloudGetBooks(ISBNRef) {
       const url = libcloud_searchURL + ISBNRef
       console.log(url);
-      console.log(ISBNRef);
-    
+
       fetch(url)
         .then(response => {
           if (response.ok) {
@@ -101,7 +100,6 @@ function handleBookClick() {
     //watch for user click, take to new screen showing whether it is available
     $('#results-list').on('click', '.js-lib-click', function(event) {
         event.preventDefault();
-        console.log('yoyoyoy');
         const ISBNRef = $(event.target).text();
         console.log(ISBNRef);
         libCloudGetBooks(ISBNRef);
@@ -128,26 +126,35 @@ function displayLibResults(responseJson) {
     }
 
     $('#results-list').append(
-        `<li><h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>
-       
-        <p>${listData.name.namePart}</p>
-        <p>${listData.location[0].shelfLocator}</p>
-        </li>`
+        `<p>${listData.name.namePart}</p>
+        <p>${listData.location[0].shelfLocator}</p>`
       )
     
-    console.log('for loop next')
-
     for (let i = 0; i < listData.location.length; i++) {
-    if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true) {
-      const textVar = '.#text'
-      const stringVar = `listData.location[i].physicalLocation${textVar}`;
-      console.log(stringVar)
+       if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true) {
+
       $('#results-list').append(
-        `<p>${stringVar}</p>`
+        `<p>${listData.location[i].physicalLocation['#text']}</p>`
       )
     }
     console.log('for loop ran')
   }
+
+
+    for (let i = 0; i < listData.originInfo.length; i++) {
+        if (listData.originInfo[i].hasOwnProperty('publisher') === true) {
+
+          console.log('hey')
+        $('#results-list').append(
+          `<p>${listData.originInfo[i].publisher} ${listData.originInfo[i].dateIssued}</p>`
+        )
+      }
+      console.log('for loop ran')
+    }
+
+
+
+    console.log('for loop next')
 
       // for (let i = 0; i < listData.classification.length; i++) {
       //   $('#results-list').append(
@@ -160,6 +167,7 @@ function displayLibResults(responseJson) {
 
 
 };
+
 
 function watchForm() {
     handleNYTBooks();
