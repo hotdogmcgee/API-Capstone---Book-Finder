@@ -109,39 +109,49 @@ function handleBookClick() {
 
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
-    console.log('almost there');
     const listData = responseJson.items.mods;
-    console.log(listData);
     $('.js-results-header').text('Find it here!')
     $('#results-list').empty();
 
+    //title
     if (listData.titleInfo.hasOwnProperty('nonSort') === true) {
       $('#results-list').append(
        `<h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}`
       )
-    } else {
+    } 
+    // else if (listData.titleInfo[0].hasOwnProperty('title') === true) {
+    //   $('#results-list').append(
+    //     `<h3>${listData.titleInfo[0].title}`
+    //    )
+    // } 
+    else {
       $('#results-list').append(
         `<h3>${listData.titleInfo.title}`
        )
     }
-
-    $('#results-list').append(
-        `<p>${listData.name.namePart}</p>
-        <p>${listData.location[0].shelfLocator}</p>`
-      )
     
-    for (let i = 0; i < listData.location.length; i++) {
-       if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true) {
+    //description
+    $('#results-list').append(
+      `<p>${listData.abstract['#text']}</p>`
+    )
 
+    //author
+    if (listData.name[0].hasOwnProperty('namePart') === true) {
+    $('#results-list').append(
+        `<p>${listData.name[0].namePart}</p>`
+      )
+    } else {
       $('#results-list').append(
-        `<p>${listData.location[i].physicalLocation['#text']}</p>`
+        `<p>${listData.name.namePart}</p>`
       )
     }
-    console.log('for loop ran')
-  }
+    
+    //shelf location
+    $('#results-list').append(
+      `<p>${listData.location[0].shelfLocator}</p>`
+    )
 
-
-    for (let i = 0; i < listData.originInfo.length; i++) {
+     for (let i = 0; i < listData.originInfo.length; i++) {
         if (listData.originInfo[i].hasOwnProperty('publisher') === true) {
 
           console.log('hey')
@@ -152,20 +162,17 @@ function displayLibResults(responseJson) {
       console.log('for loop ran')
     }
 
+    for (let i = 0; i < listData.location.length; i++) {
+      if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true) {
 
+      $('#results-list').append(
+        `<p>${listData.location[i].physicalLocation['#text']}</p>`
+      )
+    }
+    console.log('for loop ran 2')
+  }
 
     console.log('for loop next')
-
-      // for (let i = 0; i < listData.classification.length; i++) {
-      //   $('#results-list').append(
-      //     `<p>${listData.classification[i].authority}</p>
-      //      <p>${listData.classification[i].content}</p>
-      //     `
-      //   )
-      // }
-          
-
-
 };
 
 
