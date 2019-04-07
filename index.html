@@ -14,12 +14,27 @@
         
 
         <form id="js-form">
-            <label for="search-date">Choose a date</label>
+            <label for="search-date">Choose a date after May 2014</label>
             <input type="date" name="search-date" id="js-search-date" required>
 
             <!--use a drop down menu -->
-            <label for="search-term">enter a genre</label>
-            <input type="text" name="search-term" id="js-search-term" value="10">
+            <label for="search-term">Select a Genre</label>
+            <!--use a drop down menu
+            <input type="text" name="search-term" id="js-search-term" value="hardcover-fiction"> -->
+
+            <div>
+                <select id="js-search-term" name="mydropdown">
+                <option class="genre-select" value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
+                <option class="genre-select" value="hardcover-fiction">Hardcover Fiction</option>
+                <option class="genre-select" value="hardcover-nonfiction">Hardcover Nonfiction</option>
+                <option class="genre-select" value="trade-fiction-paperback">Trade Fiction Paperback</option>
+                <option class="genre-select" value="paperback-nonfiction">Paperback Nonfiction</option>
+                <option class="genre-select" value="picture-books">Picture Books</option>
+                <option class="genre-select" value="series-books">Series Books</option>
+                <option class="genre-select" value="science">Science</option>
+                <option class="genre-select" value="combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</option>
+                </select>
+                </div>
 
             <input type="submit" value="Go!">
         </form>

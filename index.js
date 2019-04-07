@@ -71,6 +71,7 @@ function nytGetBooks(query, genreQuery) {
 function libCloudGetBooks(ISBNRef) {
       const url = libcloud_searchURL + ISBNRef
       console.log(url);
+      $('#js-error-message').removeClass('hidden')
 
       fetch(url)
         .then(response => {
@@ -109,9 +110,10 @@ function handleBookClick() {
 
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
-    const listData = responseJson.items.mods;
+    
     $('.js-results-header').text('Find it here!')
     $('#results-list').empty();
+    const listData = responseJson.items.mods;
 
     //title
     if (listData.titleInfo.hasOwnProperty('nonSort') === true) {
@@ -136,13 +138,13 @@ function displayLibResults(responseJson) {
     )
 
     //author
-    if (listData.name[0].hasOwnProperty('namePart') === true) {
-    $('#results-list').append(
-        `<p>${listData.name[0].namePart}</p>`
+    if (listData.name.hasOwnProperty('namePart') === true) {
+      $('#results-list').append(
+        `<p>${listData.name.namePart}</p>`
       )
     } else {
       $('#results-list').append(
-        `<p>${listData.name.namePart}</p>`
+        `<p>${listData.name[0].namePart[0]}</p>`
       )
     }
     
@@ -162,8 +164,10 @@ function displayLibResults(responseJson) {
       console.log('for loop ran')
     }
 
+    //why is this registering physicalLocation as null in error message? Is it because some of the elements on array are called "null"? 
+
     for (let i = 0; i < listData.location.length; i++) {
-      if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true) {
+      if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true && listData.location[i] !== "null") {
 
       $('#results-list').append(
         `<p>${listData.location[i].physicalLocation['#text']}</p>`
