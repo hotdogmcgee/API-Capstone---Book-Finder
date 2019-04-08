@@ -15,16 +15,15 @@ function formatQueryParams(params) {
 }
 
 function displayNYTResults(responseJson) {
-  // if there are previous results, remove them
   console.log(responseJson.results[0].published_date)
   console.log(responseJson);
   let listData = responseJson.results;
   $('.js-results-header').text('Pick the book you want to find')
   $('#results-list').empty();
-  // iterate through the items array
-  //need a way to display each book in each list
+  
+  //display each book, published date of list, and a clickable ISBN
   $('#results-list').append(
-    `<p>${responseJson.results[0].published_date}</p>
+    `<p>Published on: ${responseJson.results[0].published_date}</p>
     <h2>${listData[0].list_name}</h2>`
   )
     for (let j = 0; j < responseJson.results.length; j++){
@@ -111,47 +110,94 @@ function handleBookClick() {
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
     
-    $('.js-results-header').text('Find it here!')
+    $('.js-results-header').text("See if it is available in Harvard's library system!")
     $('#results-list').empty();
+
+
+    //display error if no record found
+    if (!responseJson.items) {
+      $('#results-list').append(
+        `<h3>Could not find that item, please try another</h3>`
+      )
+      console.log('no record')
+    } else {
+      $('#js-error-message').empty();
+    }
+
     const listData = responseJson.items.mods;
 
     //title
-    if (listData.titleInfo.hasOwnProperty('nonSort') === true) {
+    if (listData.titleInfo.hasOwnProperty('nonSort')) {
       $('#results-list').append(
-       `<h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}`
+       `<h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>`
       )
+    }
+     else if (listData.titleInfo.constructor === Array && listData.titleInfo[0].hasOwnProperty('title')) {
+       if (listData.titleInfo[0].hasOwnProperty('nonSort')) {
+          $('#results-list').append(
+          `<h3>${listData.titleInfo[0].nonSort} ${listData.titleInfo[0].title}`
+          )
+        } else {
+        $('#results-list').append(
+          `<h3>${listData.titleInfo[0].title}`
+        )
+      }
     } 
-    // else if (listData.titleInfo[0].hasOwnProperty('title') === true) {
-    //   $('#results-list').append(
-    //     `<h3>${listData.titleInfo[0].title}`
-    //    )
-    // } 
-    else {
+    else if (listData.titleInfo.hasOwnProperty('title')) {
       $('#results-list').append(
-        `<h3>${listData.titleInfo.title}`
+        `<h3>${listData.titleInfo.title}</h3>`
        )
+    } else {
+      $('#results-list').append(
+      ` <h3>something</h3>`)
     }
     
     //description
-    $('#results-list').append(
+    if (listData.abstract.hasOwnProperty('#text')) {
+      $('#results-list').append(
       `<p>${listData.abstract['#text']}</p>`
-    )
+      )
+    } else if (listData.abstract[0].hasOwnProperty('#text')) {
+      $('#results-list').append(
+        `<p>${listData.abstract[0]['#text']}</p>`
+        )
+    }
+
+    // console.log(listData.name.constructor != Array && listData.name.namePart.constructor != Array && listData.name.hasOwnProperty('namePart'), 'you did it')
 
     //author
-    if (listData.name.hasOwnProperty('namePart') === true) {
+    if (listData.name.constructor != Array && listData.name.namePart.constructor != Array && listData.name.hasOwnProperty('namePart')) {
       $('#results-list').append(
         `<p>${listData.name.namePart}</p>`
       )
-    } else {
+      console.log(1)
+    } else if (listData.name.constructor === Array && listData.name[0].hasOwnProperty('namePart')) {
+      $('#results-list').append(
+        `<p>${listData.name[0].namePart}</p>`
+      )
+      console.log(2)
+    } else if (listData.name.constructor === Array && listData.name[0].hasOwnProperty('namePart') && listData.name[0].length > 1) {
       $('#results-list').append(
         `<p>${listData.name[0].namePart[0]}</p>`
       )
+      console.log(3)
+    } else if (listData.name.hasOwnProperty('namePart') && listData.name.namePart.length > 1) {
+      $('#results-list').append(
+        `<p>${listData.name.namePart[0]}</p>`
+      )
+      console.log(4)
     }
     
     //shelf location
-    $('#results-list').append(
-      `<p>${listData.location[0].shelfLocator}</p>`
-    )
+      if (listData.location && listData.location[0].shelfLocator) {
+         $('#results-list').append(
+          `<p>${listData.location[0].shelfLocator}</p>`
+        )
+      } else {
+        $('#results-list').append(
+          `<p>Not currently available.</p>`
+        )
+      }
 
      for (let i = 0; i < listData.originInfo.length; i++) {
         if (listData.originInfo[i].hasOwnProperty('publisher') === true) {
@@ -167,7 +213,7 @@ function displayLibResults(responseJson) {
     //why is this registering physicalLocation as null in error message? Is it because some of the elements on array are called "null"? 
 
     for (let i = 0; i < listData.location.length; i++) {
-      if (listData.location[i].physicalLocation.hasOwnProperty('#text') === true && listData.location[i] !== "null") {
+      if (listData.location[i] && listData.location[i].physicalLocation.hasOwnProperty('#text')) {
 
       $('#results-list').append(
         `<p>${listData.location[i].physicalLocation['#text']}</p>`
