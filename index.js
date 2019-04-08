@@ -24,8 +24,8 @@ function displayNYTResults(responseJson) {
   //display each book, published date of list, and a clickable ISBN
   $('#results-list').append(
     `<p>Published on: ${responseJson.results[0].published_date}</p>
-    <h2>${listData[0].list_name}</h2>`
-  )
+    <h2>${listData[0].list_name}</h2>`)
+
     for (let j = 0; j < responseJson.results.length; j++){
       $('#results-list').append(
         `<li>
@@ -103,16 +103,13 @@ function handleBookClick() {
         const ISBNRef = $(event.target).text();
         console.log(ISBNRef);
         libCloudGetBooks(ISBNRef);
-
     })
 }
 
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
-    
     $('.js-results-header').text("See if it is available in Harvard's library system!")
     $('#results-list').empty();
-
 
     //display error if no record found
     if (!responseJson.items) {
@@ -129,24 +126,20 @@ function displayLibResults(responseJson) {
     //title
     if (listData.titleInfo.hasOwnProperty('nonSort')) {
       $('#results-list').append(
-       `<h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>`
-      )
+       `<h3>${listData.titleInfo.nonSort} ${listData.titleInfo.title}</h3>`)
     }
      else if (listData.titleInfo.constructor === Array && listData.titleInfo[0].hasOwnProperty('title')) {
        if (listData.titleInfo[0].hasOwnProperty('nonSort')) {
           $('#results-list').append(
-          `<h3>${listData.titleInfo[0].nonSort} ${listData.titleInfo[0].title}`
-          )
+          `<h3>${listData.titleInfo[0].nonSort} ${listData.titleInfo[0].title}`)
         } else {
         $('#results-list').append(
-          `<h3>${listData.titleInfo[0].title}`
-        )
+          `<h3>${listData.titleInfo[0].title}`)
       }
     } 
-    else if (listData.titleInfo.hasOwnProperty('title')) {
+     else if (listData.titleInfo.hasOwnProperty('title')) {
       $('#results-list').append(
-        `<h3>${listData.titleInfo.title}</h3>`
-       )
+        `<h3>${listData.titleInfo.title}</h3>`)
     } else {
       $('#results-list').append(
       ` <h3>something</h3>`)
@@ -155,74 +148,56 @@ function displayLibResults(responseJson) {
     //description
     if (listData.abstract.hasOwnProperty('#text')) {
       $('#results-list').append(
-      `<p>${listData.abstract['#text']}</p>`
-      )
+      `<p>${listData.abstract['#text']}</p>`)
     } else if (listData.abstract[0].hasOwnProperty('#text')) {
       $('#results-list').append(
-        `<p>${listData.abstract[0]['#text']}</p>`
-        )
+        `<p>${listData.abstract[0]['#text']}</p>`)
     }
-
-    // console.log(listData.name.constructor != Array && listData.name.namePart.constructor != Array && listData.name.hasOwnProperty('namePart'), 'you did it')
 
     //author
     if (listData.name.constructor != Array && listData.name.namePart.constructor != Array && listData.name.hasOwnProperty('namePart')) {
       $('#results-list').append(
-        `<p>${listData.name.namePart}</p>`
-      )
+        `<p>${listData.name.namePart}</p>`)
       console.log(1)
+
     } else if (listData.name.constructor === Array && listData.name[0].hasOwnProperty('namePart')) {
       $('#results-list').append(
-        `<p>${listData.name[0].namePart}</p>`
-      )
+        `<p>${listData.name[0].namePart}</p>`)
       console.log(2)
+
     } else if (listData.name.constructor === Array && listData.name[0].hasOwnProperty('namePart') && listData.name[0].length > 1) {
       $('#results-list').append(
-        `<p>${listData.name[0].namePart[0]}</p>`
-      )
+        `<p>${listData.name[0].namePart[0]}</p>`)
       console.log(3)
+
     } else if (listData.name.hasOwnProperty('namePart') && listData.name.namePart.length > 1) {
       $('#results-list').append(
-        `<p>${listData.name.namePart[0]}</p>`
-      )
+        `<p>${listData.name.namePart[0]}</p>`)
       console.log(4)
     }
     
     //shelf location
       if (listData.location && listData.location[0].shelfLocator) {
          $('#results-list').append(
-          `<p>${listData.location[0].shelfLocator}</p>`
-        )
+          `<p>${listData.location[0].shelfLocator}</p>`)
       } else {
         $('#results-list').append(
-          `<p>Not currently available.</p>`
-        )
+          `<p>Not currently available.</p>`)
       }
 
      for (let i = 0; i < listData.originInfo.length; i++) {
-        if (listData.originInfo[i].hasOwnProperty('publisher') === true) {
-
-          console.log('hey')
+        if (listData.originInfo[i].hasOwnProperty('publisher')) {
         $('#results-list').append(
-          `<p>${listData.originInfo[i].publisher} ${listData.originInfo[i].dateIssued}</p>`
-        )
-      }
-      console.log('for loop ran')
-    }
-
-    //why is this registering physicalLocation as null in error message? Is it because some of the elements on array are called "null"? 
+          `<p>${listData.originInfo[i].publisher} ${listData.originInfo[i].dateIssued}</p>`)
+        }
+     }
 
     for (let i = 0; i < listData.location.length; i++) {
       if (listData.location[i] && listData.location[i].physicalLocation.hasOwnProperty('#text')) {
-
       $('#results-list').append(
-        `<p>${listData.location[i].physicalLocation['#text']}</p>`
-      )
+        `<p>${listData.location[i].physicalLocation['#text']}</p>`)
+      }
     }
-    console.log('for loop ran 2')
-  }
-
-    console.log('for loop next')
 };
 
 
