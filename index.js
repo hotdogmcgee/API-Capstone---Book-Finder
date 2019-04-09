@@ -64,6 +64,8 @@ function nytGetBooks(query, genreQuery) {
     .then(responseJson => displayNYTResults(responseJson))
     .catch(err => {
       console.log(err.message);
+      $('#js-error-message').removeClass('hidden');
+      $('#js-error-message').text(`Something went wrong, please try a different date`);
     });
 }
 
