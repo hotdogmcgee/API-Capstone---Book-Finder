@@ -13,10 +13,41 @@
         <header>
             <h1>Search the <br> New York Times <br> Bestseller List</h1>
             <div class="stage">
-                <img src="https://4.bp.blogspot.com/-SqWrbKy5uAU/WIs_wqSVQNI/AAAAAAAACZs/MeBFSBcDgt8BeOrq0erEINr5AuVTLOocACLcB/s1600/TJW-NYT-BestsellerBadge-NoRibbons.png">
+                <img src="https://i.imgur.com/MsqPDdB.png">
             </div>
         </header>
-        
+        <form>
+            <p class="fallbackLabel">Enter your birthday:</p>
+            <div class="fallbackDatePicker">
+              <span>
+                <label for="day">Day:</label>
+                <input id="day" name="day">
+              </input>
+              </span>
+              <span>
+                <label for="month">Month:</label>
+                <select id="month" name="month">
+                  <option selected>January</option>
+                  <option>February</option>
+                  <option>March</option>
+                  <option>April</option>
+                  <option>May</option>
+                  <option>June</option>
+                  <option>July</option>
+                  <option>August</option>
+                  <option>September</option>
+                  <option>October</option>
+                  <option>November</option>
+                  <option>December</option>
+                </select>
+              </span>
+              <span>
+                <label for="year">Year:</label>
+                <input id="year" name="year">
+              </input>
+              </span>
+            </div>
+        </form>
         <form id="js-form">
             <label for="search-date">Choose a date after May 2014</label>
             <input type="date" name="search-date" id="js-search-date" required>
