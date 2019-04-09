@@ -9,14 +9,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <main class="container">
         <header>
             <h1>Search the <br> New York Times <br> Bestseller List</h1>
             <div class="stage">
-                <img src="https://4.bp.blogspot.com/-SqWrbKy5uAU/WIs_wqSVQNI/AAAAAAAACZs/MeBFSBcDgt8BeOrq0erEINr5AuVTLOocACLcB/s1600/TJW-NYT-BestsellerBadge-NoRibbons.png">
+                <img src="https://i.imgur.com/MsqPDdB.png">
             </div>
         </header>
-        
+
         <form id="js-form">
             <label for="search-date">Choose a date after May 2014</label>
             <input type="date" name="search-date" id="js-search-date" required>
@@ -26,17 +26,17 @@
             <!--use a drop down menu
             <input type="text" name="search-term" id="js-search-term" value="hardcover-fiction"> -->
 
-            <div>
-                <select id="js-search-term" name="mydropdown">
-                <option class="genre-select" value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
-                <option class="genre-select" value="hardcover-fiction">Hardcover Fiction</option>
-                <option class="genre-select" value="hardcover-nonfiction">Hardcover Nonfiction</option>
-                <option class="genre-select" value="trade-fiction-paperback">Trade Fiction Paperback</option>
-                <option class="genre-select" value="paperback-nonfiction">Paperback Nonfiction</option>
-                <option class="genre-select" value="science">Science</option>
-                <option class="genre-select" value="combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</option>
+            <div class="genre-select-dropdown">
+                <select id="js-search-term" name="mydropdown" >
+                    <option class="genre-select" value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
+                    <option class="genre-select" value="hardcover-fiction">Hardcover Fiction</option>
+                    <option class="genre-select" value="hardcover-nonfiction">Hardcover Nonfiction</option>
+                    <option class="genre-select" value="trade-fiction-paperback">Trade Fiction Paperback</option>
+                    <option class="genre-select" value="paperback-nonfiction">Paperback Nonfiction</option>
+                    <option class="genre-select" value="science">Science</option>
+                    <option class="genre-select" value="combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</option>
                 </select>
-                </div>
+            </div>
 
             <input type="submit" value="Go!" class="submit-button">
         </form>
@@ -48,12 +48,14 @@
           </ol>
         </section>
 
-        <div class="api-display">
-            <a href=" https://developer.nytimes.com">
-                <img class="nyt-api-image" src="https://developer.nytimes.com/files/poweredby_nytimes_65b.png?v=1539041445000"></a>
-        </div>
-    </div>
-    <footer role="content-info">&copy; Kevin Robinson 2019
+
+    </main>
+    <footer role="content-info">
+            <div class="api-display">
+                    <a href=" https://developer.nytimes.com">
+                        <img class="nyt-api-image" src="https://developer.nytimes.com/files/poweredby_nytimes_65b.png?v=1539041445000"></a>
+                </div>
+                <p>&copy; Kevin Robinson 2019</p>
     </footer>
     <script src="index.js"></script>
 </body>
