@@ -11,7 +11,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>Search the New York Times Bestseller List</h1>
+            <h1>Search the <br> New York Times <br> Bestseller List</h1>
+            <img src="https://4.bp.blogspot.com/-SqWrbKy5uAU/WIs_wqSVQNI/AAAAAAAACZs/MeBFSBcDgt8BeOrq0erEINr5AuVTLOocACLcB/s1600/TJW-NYT-BestsellerBadge-NoRibbons.png">
         </header>
         
         <form id="js-form">
@@ -35,17 +36,23 @@
                 </select>
                 </div>
 
-            <input type="submit" value="Go!">
+            <input type="submit" value="Go!" class="submit-button">
         </form>
 
         <p id="js-error-message" class="error-message"></p>
         <section id="results" class="hidden">
           <h2 class="js-results-header">Search results</h2>
-          <ul id="results-list">
-          </ul>
+          <ol id="results-list">
+          </ol>
         </section>
+
+        <div class="api-display">
+            <a href=" https://developer.nytimes.com">
+                <img class="nyt-api-image" src="https://developer.nytimes.com/files/poweredby_nytimes_65b.png?v=1539041445000"></a>
+        </div>
     </div>
-    <footer role="content-info">&copy; Kevin Robinson 2019</footer>
+    <footer role="content-info">&copy; Kevin Robinson 2019
+    </footer>
     <script src="index.js"></script>
 </body>
 </html>
