@@ -29,10 +29,11 @@ function displayNYTResults(responseJson) {
     for (let j = 0; j < responseJson.results.length; j++){
       $('#results-list').append(
         `<li>
-        <p>${listData[j].book_details[0].title}</p>
-        <button class="js-lib-click">
-          <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
-          </button>
+        <div class="bookandbutton"><p>${listData[j].book_details[0].title}</p>
+          <button class="js-lib-click">
+            <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
+            </button>
+          </div>
         </li>`
       )};
   

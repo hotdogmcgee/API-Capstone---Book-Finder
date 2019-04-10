@@ -52,6 +52,12 @@
 
   @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
 
+  .bookandbutton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   ol {
     list-style: none;
     counter-reset: my-awesome-counter;
@@ -59,12 +65,17 @@
     padding: 0;
   }
   ol li {
+    align-items: center;
     counter-increment: my-awesome-counter;
     display: flex;
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
   }
+
   ol li::before {
+    justify-content: center;
+    align-items: center;
+    display: flex;
     content: counter(my-awesome-counter);
     font-weight: bold;
     font-size: 15px;
@@ -91,9 +102,14 @@
     margin-bottom: 20px;
   }
 
-  #results-list li button {
-    width: 160px;
+  .bookandbutton button {
+    width: 105px;
   }
+
+  .bookandbutton p {
+    width: 200px;
+  }
+
   .error-message {
       color: red;
   }
@@ -193,6 +209,7 @@
 
 .select-items div {
   margin-bottom: 0;
+  cursor: pointer;
 }
 
 /* Hide the items when the select box is closed: */
