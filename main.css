@@ -5,7 +5,7 @@
   }
   
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Manuale', serif;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -103,6 +103,29 @@
     margin-bottom: 20px;
   }
 
+ #js-form label {
+    text-align: center;
+    margin-bottom: 7px;
+  }
+
+  #js-search-date {
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -webkit-user-select: none;
+    border: 1px solid #AAA;
+    font-size: 14px;
+    color: white;
+    background-color: #3A6BAC;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding-left: 15px;
+    height: 50px;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+  }
+
   .bookandbutton button {
     width: 105px;
   }
@@ -163,8 +186,9 @@
   }
 
 .genre-select-dropdown {
-  font-family: Arial;
   align-self: center;
+
+
 }
 
 /* .genre-select-dropdown select {
@@ -185,15 +209,16 @@
   background-position: 98.5% center;
   background-repeat: no-repeat;
   border: 1px solid #AAA;
-  font-size: 12px;
-  color: black;
+  font-size: 14px;
+  color: white;
   background-image: url(http://i62.tinypic.com/15xvbd5.png);
   background-color: #3A6BAC;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-  padding-left: 5px;
+  padding-left: 15px;
   height: 50px;
+  font-family: 'PT Sans', sans-serif;
 }
 
 /* .genre-select-dropdown select:hover {
