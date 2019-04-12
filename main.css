@@ -36,14 +36,10 @@
     text-align: center;
   }
   
-  button, input[type="text"] {
-    padding: 5px;
-  }
 
   .submit-button {
     height: 50px;
     width: 100px;
-    align-self: center;
   }
   
   button:hover {
@@ -58,13 +54,19 @@
     align-items: center;
   }
 
-  ol {
+  #results-list {
     list-style: none;
     counter-reset: my-awesome-counter;
     margin: 0;
     padding: 0;
   }
-  ol li {
+
+  #results-list h3 {
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  #results-list li {
     align-items: center;
     counter-increment: my-awesome-counter;
     display: flex;
@@ -97,6 +99,7 @@
     width: 80%;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
 
   #js-form > * {
@@ -221,12 +224,12 @@
   font-family: 'PT Sans', sans-serif;
 }
 
-/* .genre-select-dropdown select:hover {
-  border-color: red;
-} */
-
 
 .select-items div {
   margin-bottom: 0;
   cursor: pointer;
+}
+
+.book-description {
+  text-indent: 2em;
 }

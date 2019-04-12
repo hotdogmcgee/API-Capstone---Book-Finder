@@ -29,9 +29,12 @@ function displayNYTResults(responseJson) {
     for (let j = 0; j < responseJson.results.length; j++){
       $('#results-list').append(
         `<li>
-        <div class="bookandbutton"><p>${listData[j].book_details[0].title}</p>
-          <button class="js-lib-click">
-            <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
+          <div class="bookandbutton">
+            <p>${listData[j].book_details[0].title}</p>
+            
+            <p> ${listData[j].book_details[0].author}</p>
+            <button class="js-lib-click">
+              <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
             </button>
           </div>
         </li>`
@@ -151,10 +154,10 @@ function displayLibResults(responseJson) {
     //description
     if (listData.abstract.hasOwnProperty('#text')) {
       $('#results-list').append(
-      `<p>${listData.abstract['#text']}</p>`)
+      `<p class="book-description">${listData.abstract['#text']}</p>`)
     } else if (listData.abstract[0].hasOwnProperty('#text')) {
       $('#results-list').append(
-        `<p>${listData.abstract[0]['#text']}</p>`)
+        `<p class="book-description">${listData.abstract[0]['#text']}</p>`)
     }
 
     //author
