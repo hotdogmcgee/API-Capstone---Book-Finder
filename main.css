@@ -38,6 +38,7 @@
   
 
   .submit-button {
+    -webkit-appearance: none;
     height: 50px;
     width: 100px;
   }
