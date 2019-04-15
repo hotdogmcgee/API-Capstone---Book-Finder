@@ -49,10 +49,11 @@
 
   @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
 
-  .bookandbutton {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .bookdetails {
+    width: 80%;
+    font-size: 16px;
+    padding-right: 10px;
+
   }
 
   #results-list {
@@ -73,9 +74,10 @@
     display: flex;
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
+    border-bottom: 1px solid lightgrey;
   }
 
-  ol li::before {
+  #results-list li::before {
     width: 5px;
     justify-content: center;
     align-items: center;
@@ -83,7 +85,7 @@
     content: counter(my-awesome-counter);
     font-weight: bold;
     font-size: 15px;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
     font-family: 'Abril Fatface', serif;
     line-height: 1;
   }
@@ -113,6 +115,7 @@
   }
 
   #js-search-date {
+    -webkit-appearance: button;
     -webkit-padding-end: 20px;
     -webkit-padding-start: 2px;
     -webkit-user-select: none;
@@ -130,13 +133,8 @@
     letter-spacing: 3px;
   }
 
-  .bookandbutton button {
-    width: 105px;
-  }
 
-  .bookandbutton p {
-    width: 200px;
-  }
+
 
   .error-message {
       color: red;
@@ -155,8 +153,11 @@
   }
 
   .js-lib-click {
-    max-height: 41px; 
-    margin-right: 10px;
+    width: 105px; 
+    height: 50px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #373b44, #3A6BAC);
+    color: white;
   }
 
   .js-lib-click-exact {
@@ -164,7 +165,7 @@
   }
 
   .js-lib-click::after {
-    content: 'click here';
+    content: 'Find It!';
     text-indent: 0;
     display: block;
     line-height: initial;
@@ -206,7 +207,7 @@
 
 
 .genre-select-dropdown select {
-  -webkit-appearance: button;
+
   -webkit-padding-end: 20px;
   -webkit-padding-start: 2px;
   -webkit-user-select: none;
@@ -215,7 +216,8 @@
   border: 1px solid #AAA;
   font-size: 14px;
   color: white;
-  background-image: url(http://i62.tinypic.com/15xvbd5.png);
+  /* -webkit-appearance: button; */
+  /* background-image: url(http://i62.tinypic.com/15xvbd5.png); */
   background-color: #3A6BAC;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -233,4 +235,14 @@
 
 .book-description {
   text-indent: 2em;
+}
+
+.portfolio-link:link {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}
+
+.portfolio-link:visited {
+  color: black;
 }

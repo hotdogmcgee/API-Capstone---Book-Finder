@@ -15,33 +15,31 @@ function formatQueryParams(params) {
 }
 
 function displayNYTResults(responseJson) {
-  console.log(responseJson.results[0].published_date)
   console.log(responseJson);
   let listData = responseJson.results;
-  $('.js-results-header').text('Pick the book you want to find')
+  // $('.js-results-header').text('Pick the book you want to find')
   $('#results-list').empty();
   
   //display each book, published date of list, and a clickable ISBN
   $('#results-list').append(
-    `<p>Published on: ${responseJson.results[0].published_date}</p>
-    <h2>${listData[0].list_name}</h2>`)
+    `<h2>${listData[0].list_name}</h2>
+    <p>Published on: ${responseJson.results[0].published_date}</p>`)
 
     for (let j = 0; j < responseJson.results.length; j++){
       $('#results-list').append(
         `<li>
-          <div class="bookandbutton">
+          <div class="bookdetails">
             <p>${listData[j].book_details[0].title}</p>
             
             <p> ${listData[j].book_details[0].author}</p>
+          </div>
             <button class="js-lib-click">
               <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
             </button>
-          </div>
         </li>`
       )};
   
 
-    console.log('hello')
   //display the results section  
   $('#results').removeClass('hidden');
   $('#js-error-message').addClass('hidden');
@@ -56,7 +54,6 @@ function nytGetBooks(query, genreQuery) {
   };
   const queryString = formatQueryParams(params)
   const url = nyt_v2_searchURL + '?' + queryString;
-  console.log(url);
 
   fetch(url)
     .then(response => {
@@ -75,7 +72,6 @@ function nytGetBooks(query, genreQuery) {
 
 function libCloudGetBooks(ISBNRef) {
       const url = libcloud_searchURL + ISBNRef
-      console.log(url);
       $('#js-error-message').removeClass('hidden')
 
       fetch(url)
@@ -97,7 +93,6 @@ function handleNYTBooks() {
     event.preventDefault();
     const searchDate = $('#js-search-date').val();
     const searchTerm = $('#js-search-term').val();
-    console.log(searchTerm);
     nytGetBooks(searchDate, searchTerm);
   });
 }
@@ -107,14 +102,13 @@ function handleBookClick() {
     $('#results-list').on('click', '.js-lib-click', function(event) {
         event.preventDefault();
         const ISBNRef = $(event.target).text();
-        console.log(ISBNRef);
         libCloudGetBooks(ISBNRef);
     })
 }
 
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
-    $('.js-results-header').text("See if it is available in Harvard's library system!")
+    // $('.js-results-header').text("See if it is available in Harvard's library system!")
     $('#results-list').empty();
 
     //display error if no record found
@@ -122,12 +116,13 @@ function displayLibResults(responseJson) {
       $('#results-list').append(
         `<h3>Could not find that item, please try another</h3>`
       )
-      console.log('no record')
     } else {
       $('#js-error-message').empty();
     }
 
     const listData = responseJson.items.mods;
+
+    $('#results-list').append(`<h2>See if it is available in Harvard's library system!</h2>`)
 
     //title
     if (listData.titleInfo.hasOwnProperty('nonSort')) {
@@ -164,22 +159,18 @@ function displayLibResults(responseJson) {
     if (listData.name.constructor != Array && listData.name.namePart.constructor != Array && listData.name.hasOwnProperty('namePart')) {
       $('#results-list').append(
         `<p>${listData.name.namePart}</p>`)
-      console.log(1)
 
     } else if (listData.name.constructor === Array && listData.name[0].hasOwnProperty('namePart')) {
       $('#results-list').append(
         `<p>${listData.name[0].namePart}</p>`)
-      console.log(2)
 
     } else if (listData.name.constructor === Array && listData.name[0].hasOwnProperty('namePart') && listData.name[0].length > 1) {
       $('#results-list').append(
         `<p>${listData.name[0].namePart[0]}</p>`)
-      console.log(3)
 
     } else if (listData.name.hasOwnProperty('namePart') && listData.name.namePart.length > 1) {
       $('#results-list').append(
         `<p>${listData.name.namePart[0]}</p>`)
-      console.log(4)
     }
     
     //shelf location
@@ -211,7 +202,6 @@ function displayLibResults(responseJson) {
 function handleScroll() {
   $('#results-list').on('click', '.js-lib-click', function(e) {
     window.scrollTo(0, 300);
-    console.log('scroll ran')
   })
 }
 
