@@ -3,8 +3,9 @@
 //let ISBNRef;
 const apiKeyNYT = '5EbHFVJ0Kq7H1XibGz9LwkMzwt7sxBxi'; 
 const nyt_searchURL = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
-const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json'
-const libcloud_searchURL = 'https://api.lib.harvard.edu/v2/items.json?identifier='
+const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json';
+const libcloud_searchURL = 'https://api.lib.harvard.edu/v2/items.json?identifier=';
+let globalURL = "";
 
 
 
@@ -54,6 +55,7 @@ function nytGetBooks(query, genreQuery) {
   };
   const queryString = formatQueryParams(params)
   const url = nyt_v2_searchURL + '?' + queryString;
+  globalURL = url;
 
   fetch(url)
     .then(response => {
@@ -97,6 +99,28 @@ function handleNYTBooks() {
   });
 }
 
+function handleGoBack() {
+  $('#results-list').on('click', '.go-back-button', function(event) {
+    goBack(event);
+  })
+};
+
+function goBack() {
+  fetch(globalURL)
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(response.statusText);
+  })
+  .then(responseJson => displayNYTResults(responseJson))
+  .catch(err => {
+    console.log(err.message);
+    $('#js-error-message').removeClass('hidden');
+    $('#js-error-message').text(`Something went wrong, please try a different date`);
+  }); 
+}
+
 function handleBookClick() {
     //watch for user click, take to new screen showing whether it is available
     $('#results-list').on('click', '.js-lib-click', function(event) {
@@ -122,7 +146,10 @@ function displayLibResults(responseJson) {
 
     const listData = responseJson.items.mods;
 
-    $('#results-list').append(`<h2>See if it is available in Harvard's library system!</h2>`)
+    $('#results-list').append(`<h2>See if it is available in Harvard's library system!</h2>
+      <button class="go-back-button">Go Back</button>
+    
+    `)
 
     //title
     if (listData.titleInfo.hasOwnProperty('nonSort')) {
@@ -208,6 +235,7 @@ function handleScroll() {
 function watchForm() {
     handleNYTBooks();
     handleBookClick();
+    handleGoBack()
     handleScroll()
 }
 
