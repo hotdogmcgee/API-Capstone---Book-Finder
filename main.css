@@ -91,7 +91,6 @@
     align-items: center;
     counter-increment: my-awesome-counter;
     display: flex;
-    font-size: 0.8rem;
     margin-bottom: 0.5rem;
     border-bottom: 1px solid lightgrey;
   }
@@ -173,6 +172,7 @@
     border-radius: 5px;
     background: linear-gradient(to right, #373b44, #3A6BAC);
     color: white;
+    font-size: 18px;
   }
 
   .js-lib-click-exact {
@@ -270,11 +270,23 @@
 
     #js-search-term {
       padding-left: 20px;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     #js-search-date {
       font-size: 20px;
+      width: 60%;
+      letter-spacing: 1.5px;
+    }
+
+    .genre-search-label {
+      border-left: 1px solid lightgrey;
+      margin-left: 10px;
+    }
+
+    .submit-button {
+      margin-top: 50px;
+      width: 200px;
     }
 
     .container {
@@ -305,5 +317,13 @@
       display: flex;
       align-items: center;
       justify-content: space-around;
+    }
+
+    #results-list li::before {
+      margin-right: 2rem;
+    }
+
+    .bookdetails {
+      font-size: 18px;
     }
 }
