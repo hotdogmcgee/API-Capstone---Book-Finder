@@ -36,6 +36,10 @@
   footer p {
     text-align: center;
   }
+
+  .nyt-api-image {
+    width: 65px;
+  }
   
 
   .submit-button {
@@ -143,11 +147,6 @@
     font-size: 20px;
     letter-spacing: 3px;
   }
-
-
-  .error-message {
-      color: red;
-  }
   
   .hidden {
     display: none;
@@ -157,11 +156,7 @@
     display: block;
   }
 
-  .nyt-api-image {
-    width: 65px;
-  }
 
-  
   .go-back-button {
     background: linear-gradient(to right, #5C866D, #373b44);
     height: 35px;
@@ -246,4 +241,69 @@
 
 .portfolio-link:visited {
   color: black;
+}
+
+@media only screen and (min-width: 750px) {
+
+    #js-form {
+      width: 60%
+    }
+
+    .stage img {
+      height: 140px;
+      width: 140px;
+    }
+
+    header p {
+      font-size: 20px;
+    }
+
+    #js-form {
+      text-align: center;
+      width: 100%
+    }
+
+    #js-search-date {
+      width: 60%;
+    }
+
+
+    #js-search-term {
+      padding-left: 20px;
+      font-size: 18px;
+    }
+
+    #js-search-date {
+      font-size: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+    }
+
+    #results-list > h2 {
+      text-align: center;
+    }
+
+    #results-list > h3 {
+      font-size: 30px;
+    }
+
+    .go-back-button {
+      height: 50px;
+      width: 110px;
+      font-size: 18px;
+      margin-right: 20px;
+    }
+
+    #js-form div {
+      display: flex;
+    }
+
+    #js-form div label {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
 }

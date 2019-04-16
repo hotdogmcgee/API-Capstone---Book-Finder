@@ -220,7 +220,7 @@ function displayLibResults(responseJson) {
 //SCROLL TO REGION WHEN BOOK IS CLICKED
 function handleScroll() {
   $('#results-list').on('click', '.js-lib-click', function(e) {
-    window.scrollTo(0, 300);
+    window.scrollTo(0, 550);
   })
 }
 
