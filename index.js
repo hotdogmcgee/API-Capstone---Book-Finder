@@ -1,6 +1,5 @@
 'use strict';
 
-//let ISBNRef;
 const apiKeyNYT = '5EbHFVJ0Kq7H1XibGz9LwkMzwt7sxBxi'; 
 const nyt_searchURL = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
 const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json';
@@ -18,13 +17,12 @@ function formatQueryParams(params) {
 function displayNYTResults(responseJson) {
   console.log(responseJson);
   let listData = responseJson.results;
-  // $('.js-results-header').text('Pick the book you want to find')
   $('#results-list').empty();
   
   //display each book, published date of list, and a clickable ISBN
   $('#results-list').append(
-    `<h2>${listData[0].list_name}</h2>
-    <p>Published on: ${responseJson.results[0].published_date}</p>`)
+    `<h2 class="list-title">${listData[0].list_name}</h2>
+    <p class="published-date">Published on: ${responseJson.results[0].published_date}</p>`)
 
     for (let j = 0; j < responseJson.results.length; j++){
       $('#results-list').append(
@@ -40,13 +38,10 @@ function displayNYTResults(responseJson) {
         </li>`
       )};
   
-
-  //display the results section  
   $('#results').removeClass('hidden');
-  $('#js-error-message').addClass('hidden');
 };
 
-//uses NYT API to get back list of book results, will be shown on screen 2
+//uses NYT API to get back list of book results
 function nytGetBooks(query, genreQuery) {
   const params = {
     'published-date': query,
@@ -67,15 +62,11 @@ function nytGetBooks(query, genreQuery) {
     .then(responseJson => displayNYTResults(responseJson))
     .catch(err => {
       console.log(err.message);
-      $('#js-error-message').removeClass('hidden');
-      $('#js-error-message').text(`Something went wrong, please try a different date`);
     });
 }
 
 function libCloudGetBooks(ISBNRef) {
-      const url = libcloud_searchURL + ISBNRef
-      $('#js-error-message').removeClass('hidden')
-
+      const url = libcloud_searchURL + ISBNRef;
       fetch(url)
         .then(response => {
           if (response.ok) {
@@ -85,7 +76,7 @@ function libCloudGetBooks(ISBNRef) {
         })
         .then(responseJson => displayLibResults(responseJson))
         .catch(err => {
-          $('#js-error-message').text(`Something went wrong: ${err.message}`);
+          console.log(err.message)
         });
 }
 
@@ -116,8 +107,6 @@ function goBack() {
   .then(responseJson => displayNYTResults(responseJson))
   .catch(err => {
     console.log(err.message);
-    $('#js-error-message').removeClass('hidden');
-    $('#js-error-message').text(`Something went wrong, please try a different date`);
   }); 
 }
 
@@ -132,24 +121,27 @@ function handleBookClick() {
 
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
-    // $('.js-results-header').text("See if it is available in Harvard's library system!")
     $('#results-list').empty();
 
     //display error if no record found
     if (!responseJson.items) {
       $('#results-list').append(
-        `<h3>Could not find that item, please try another</h3>`
+          `<h2>Could not find that item, please try another.</h2>
+          <div class="back-button-div">
+            <button class="go-back-button">Go Back</button>
+          </div>`
       )
     } else {
-      $('#js-error-message').empty();
+      $('#results-list').append(`
+          <h2>See if it is available in Harvard's library system!</h2>
+          <div class="back-button-div">
+            <button class="go-back-button">Go Back</button>
+          </div>`
+      )
     }
 
-    const listData = responseJson.items.mods;
 
-    $('#results-list').append(`<h2>See if it is available in Harvard's library system!</h2>
-      <button class="go-back-button">Go Back</button>
-    
-    `)
+    const listData = responseJson.items.mods;
 
     //title
     if (listData.titleInfo.hasOwnProperty('nonSort')) {

@@ -19,16 +19,14 @@
             <div class="stage">
                 <img src="https://i.imgur.com/MsqPDdB.png">
             </div>
+            <p>Once you have selected a book, you can see if it is available in Harvard's library system.</p>
         </header>
 
         <form id="js-form">
             <label for="search-date">Choose a DATE after May 2014</label>
             <input type="date" name="search-date" id="js-search-date" required>
 
-            <!--use a drop down menu -->
             <label for="search-term">Select a GENRE</label>
-            <!--use a drop down menu
-            <input type="text" name="search-term" id="js-search-term" value="hardcover-fiction"> -->
 
             <div class="genre-select-dropdown">
                 <select id="js-search-term" name="mydropdown" >
@@ -45,7 +43,6 @@
             <button type="submit" value="Go!" class="submit-button">Go!</button>
         </form>
 
-        <p id="js-error-message" class="error-message"></p>
         <section id="results" class="hidden">
           <h2 class="js-results-header"></h2>
           <ol id="results-list">

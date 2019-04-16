@@ -19,7 +19,8 @@
 
   header {
     text-align: center;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid lightgrey;
   }
 
   .stage img {
@@ -41,6 +42,10 @@
     -webkit-appearance: none;
     height: 50px;
     width: 100px;
+    background-color: #5C866D;
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
   }
   
   button:hover {
@@ -63,10 +68,20 @@
     padding: 0;
   }
 
-  #results-list h3 {
+  .published-date {
     text-transform: capitalize;
     text-align: center;
+    letter-spacing: 1px;
   }
+
+  #results-list .list-title, h3{
+    text-transform: capitalize;
+    text-align: center;
+    letter-spacing: 1px;
+    text-decoration: underline;
+    clear: right;
+  }
+
 
   #results-list li {
     align-items: center;
@@ -116,15 +131,11 @@
 
   #js-search-date {
     -webkit-appearance: button;
-    -webkit-padding-end: 20px;
-    -webkit-padding-start: 2px;
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
     border: 1px solid #AAA;
     font-size: 14px;
     color: white;
     background-color: #3A6BAC;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
     border-radius: 20px;
     padding-left: 15px;
     height: 50px;
@@ -132,8 +143,6 @@
     font-size: 20px;
     letter-spacing: 3px;
   }
-
-
 
 
   .error-message {
@@ -150,6 +159,17 @@
 
   .nyt-api-image {
     width: 65px;
+  }
+
+  
+  .go-back-button {
+    background: linear-gradient(to right, #5C866D, #373b44);
+    height: 35px;
+    width: 100px;
+    color: white;
+    border-radius: 5px;
+    float: right;
+    margin-bottom: 10px;
   }
 
   .js-lib-click {
@@ -196,28 +216,9 @@
 
 }
 
-/* .genre-select-dropdown select {
-  background-color: #3A6BAC;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
-  text-overflow: wrap;
-}  */
-
-
 .genre-select-dropdown select {
-
-  -webkit-padding-end: 20px;
-  -webkit-padding-start: 2px;
-  -webkit-user-select: none;
-  background-position: 98.5% center;
-  background-repeat: no-repeat;
-  border: 1px solid #AAA;
   font-size: 14px;
   color: white;
-  /* -webkit-appearance: button; */
-  /* background-image: url(http://i62.tinypic.com/15xvbd5.png); */
   background-color: #3A6BAC;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
