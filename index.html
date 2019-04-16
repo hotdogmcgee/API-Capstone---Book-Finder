@@ -22,15 +22,15 @@
             <p>Once you have selected a book, you can see if it is available in Harvard's library system.</p>
         </header>
 
-        <form id="js-form">
+        <form id="input-form">
             <div>
                 <label for="search-date">Choose a DATE after May 2014</label>
-                <input type="date" name="search-date" id="js-search-date" required>
+                <input type="date" name="search-date" id="search-date" required>
 
                 <label class="genre-search-label" for="search-term">Select a GENRE</label>
 
                 <div class="genre-select-dropdown">
-                    <select id="js-search-term" name="mydropdown" >
+                    <select id="search-term" name="mydropdown" >
                         <option class="genre-select" value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
                         <option class="genre-select" value="hardcover-fiction">Hardcover Fiction</option>
                         <option class="genre-select" value="hardcover-nonfiction">Hardcover Nonfiction</option>
@@ -46,7 +46,6 @@
         </form>
 
         <section id="results" class="hidden">
-          <h2 class="js-results-header"></h2>
           <ol id="results-list">
           </ol>
         </section>
@@ -54,11 +53,14 @@
 
     </main>
     <footer role="content-info">
-            <div class="api-display">
-                    <a href=" https://developer.nytimes.com">
-                        <img class="nyt-api-image" src="https://developer.nytimes.com/files/poweredby_nytimes_65b.png?v=1539041445000"></a>
-                </div>
-                <p><a class="portfolio-link" target ="blank" href="https://hotdogmcgee.github.io/Portfolio-Website/">&copy; Kevin Robinson 2019</a></p>
+        <div class="api-display">
+            <a href=" https://developer.nytimes.com">
+                <img class="nyt-api-image" src="https://developer.nytimes.com/files/poweredby_nytimes_65b.png?v=1539041445000">
+            </a>
+        </div>
+        <p>
+            <a class="portfolio-link" target ="blank" href="https://hotdogmcgee.github.io/Portfolio-Website/">&copy; Kevin Robinson 2019</a>
+        </p>
     </footer>
     <script src="index.js"></script>
     <!-- <script>

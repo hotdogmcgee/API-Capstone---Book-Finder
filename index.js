@@ -1,11 +1,9 @@
 'use strict';
 
 const apiKeyNYT = '5EbHFVJ0Kq7H1XibGz9LwkMzwt7sxBxi'; 
-const nyt_searchURL = 'https://api.nytimes.com/svc/books/v3/lists/overview.json';
-const nyt_v2_searchURL = 'https://api.nytimes.com/svc/books/v3/lists.json';
-const libcloud_searchURL = 'https://api.lib.harvard.edu/v2/items.json?identifier=';
+const listSearchURL = 'https://api.nytimes.com/svc/books/v3/lists.json';
+const libCloudSearchURL = 'https://api.lib.harvard.edu/v2/items.json?identifier=';
 let globalURL = "";
-
 
 
 function formatQueryParams(params) {
@@ -14,42 +12,17 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function displayNYTResults(responseJson) {
-  console.log(responseJson);
-  let listData = responseJson.results;
-  $('#results-list').empty();
-  
-  //display each book, published date of list, and a clickable ISBN
-  $('#results-list').append(
-    `<h2 class="list-title">${listData[0].list_name}</h2>
-    <p class="published-date">Published on: ${responseJson.results[0].published_date}</p>`)
-
-    for (let j = 0; j < responseJson.results.length; j++){
-      $('#results-list').append(
-        `<li>
-          <div class="bookdetails">
-            <p>${listData[j].book_details[0].title}</p>
-            
-            <p> ${listData[j].book_details[0].author}</p>
-          </div>
-            <button class="js-lib-click">
-              <span class="js-lib-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
-            </button>
-        </li>`
-      )};
-  
-  $('#results').removeClass('hidden');
-};
-
 //uses NYT API to get back list of book results
-function nytGetBooks(query, genreQuery) {
+function nytGetBooks(date, genreQuery) {
   const params = {
-    'published-date': query,
+    'published-date': date,
     'api-key': apiKeyNYT,
     list: genreQuery,
   };
   const queryString = formatQueryParams(params)
-  const url = nyt_v2_searchURL + '?' + queryString;
+  const url = listSearchURL + '?' + queryString;
+
+  //setting globalURL for goBack() function
   globalURL = url;
 
   fetch(url)
@@ -65,8 +38,49 @@ function nytGetBooks(query, genreQuery) {
     });
 }
 
+function displayNYTResults(responseJson) {
+  console.log(responseJson);
+  let listData = responseJson.results;
+  $('#results-list').empty();
+  
+  //display each book, published date of list, and a clickable ISBN
+  $('#results-list').append(
+    `<h2 class="list-title">${listData[0].list_name}</h2>
+    <p class="published-date">Published on: ${responseJson.results[0].published_date}</p>`)
+
+    for (let j = 0; j < responseJson.results.length; j++) {
+      $('#results-list').append(
+        `<li>
+          <div class="bookdetails">
+            <p>${listData[j].book_details[0].title}</p>
+            
+            <p> ${listData[j].book_details[0].author}</p>
+          </div>
+            <button class="book-click">
+              <span class="book-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
+            </button>
+        </li>`
+      )};
+  
+  $('#results').removeClass('hidden');
+};
+
+function goBack() {
+  fetch(globalURL)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(responseJson => displayNYTResults(responseJson))
+    .catch(err => {
+      console.log(err.message);
+  }); 
+}
+
 function libCloudGetBooks(ISBNRef) {
-      const url = libcloud_searchURL + ISBNRef;
+      const url = libCloudSearchURL + ISBNRef;
       fetch(url)
         .then(response => {
           if (response.ok) {
@@ -80,44 +94,6 @@ function libCloudGetBooks(ISBNRef) {
         });
 }
 
-
-function handleNYTBooks() {
-  $('form').submit(event => {
-    event.preventDefault();
-    const searchDate = $('#js-search-date').val();
-    const searchTerm = $('#js-search-term').val();
-    nytGetBooks(searchDate, searchTerm);
-  });
-}
-
-function handleGoBack() {
-  $('#results-list').on('click', '.go-back-button', function(event) {
-    goBack(event);
-  })
-};
-
-function goBack() {
-  fetch(globalURL)
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error(response.statusText);
-  })
-  .then(responseJson => displayNYTResults(responseJson))
-  .catch(err => {
-    console.log(err.message);
-  }); 
-}
-
-function handleBookClick() {
-    //watch for user click, take to new screen showing whether it is available
-    $('#results-list').on('click', '.js-lib-click', function(event) {
-        event.preventDefault();
-        const ISBNRef = $(event.target).text();
-        libCloudGetBooks(ISBNRef);
-    })
-}
 
 //point user in correct direction using Library Cloud API
 function displayLibResults(responseJson) {
@@ -216,10 +192,31 @@ function displayLibResults(responseJson) {
     }
 };
 
+function handleNYTBooks() {
+  $('form').submit(event => {
+    event.preventDefault();
+    const searchDate = $('#search-date').val();
+    const searchTerm = $('#search-term').val();
+    nytGetBooks(searchDate, searchTerm);
+  });
+}
 
-//SCROLL TO REGION WHEN BOOK IS CLICKED
+function handleBookClick() {
+  $('#results-list').on('click', '.book-click', function(event) {
+      event.preventDefault();
+      const ISBNRef = $(event.target).text();
+      libCloudGetBooks(ISBNRef);
+  })
+}
+
+function handleGoBack() {
+  $('#results-list').on('click', '.go-back-button', function(event) {
+    goBack(event);
+  })
+};
+
 function handleScroll() {
-  $('#results-list').on('click', '.js-lib-click', function(e) {
+  $('#results-list').on('click', '.book-click', function(e) {
     window.scrollTo(0, 550);
   })
 }
