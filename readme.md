@@ -7,17 +7,17 @@ https://hotdogmcgee.github.io/Book-Bestseller-Finder/
 
 ## User Flow
 
-1. Users will see this screen, prompting them to select a date and genre:
+-- Users will see this screen, prompting them to select a date and genre:
 
-![landing page] (Screenshots/landing.JPG)
+![landing page](Screenshots/landing.JPG)
 
-2. Show a list of bestsellers:
+-- Show a list of bestsellers:
 
-![display list] (Screenshots/displaylist.JPG)
+![display list](Screenshots/displaylist.JPG)
 
-3. After clicking a book, users can see if the book is available in the Harvard Library system.  They will also see some details about the selected book:
+-- After clicking a book, users can see if the book is available in the Harvard Library system.  They will also see some details about the selected book:
 
-![display title] (Screenshots/displaytitle.JPG)
+![display title](Screenshots/displaytitle.JPG)
 
 
 The original idea for the app was to use WorldCat's API to search for a specific library, but usage of the API is limited to institutions.  
