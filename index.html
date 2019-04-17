@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Book Finder App</title>
+    <title>Book Bestseller Finder</title>
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Manuale|PT+Sans" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     
 </head>
 <body>
-    <main class="container">
+    <main role="main" class="container">
         <header>
             <h1>Search the <br> New York Times <br> Bestseller List</h1>
             <div class="stage">
@@ -29,18 +29,18 @@
 
                 <div class="genre-select-dropdown">
                     <select id="search-term" name="mydropdown" >
-                        <option class="genre-select" value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
-                        <option class="genre-select" value="hardcover-fiction">Hardcover Fiction</option>
-                        <option class="genre-select" value="hardcover-nonfiction">Hardcover Nonfiction</option>
-                        <option class="genre-select" value="trade-fiction-paperback">Trade Fiction Paperback</option>
-                        <option class="genre-select" value="paperback-nonfiction">Paperback Nonfiction</option>
-                        <option class="genre-select" value="science">Science</option>
-                        <option class="genre-select" value="combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</option>
+                        <option value="combined-print-and-e-book-fiction">Combined Print & E-Book Fiction</option>
+                        <option value="hardcover-fiction">Hardcover Fiction</option>
+                        <option value="hardcover-nonfiction">Hardcover Nonfiction</option>
+                        <option value="trade-fiction-paperback">Trade Fiction Paperback</option>
+                        <option value="paperback-nonfiction">Paperback Nonfiction</option>
+                        <option value="science">Science</option>
+                        <option value="combined-print-and-e-book-nonfiction">Combined Print & E-Book Nonfiction</option>
                     </select>
                 </div>
             </div>
 
-            <button type="submit" value="Go!" class="submit-button">Go!</button>
+            <button role="button" type="submit" value="Go!" class="submit-button">Go!</button>
         </form>
 
         <section id="results" class="hidden">
@@ -50,7 +50,7 @@
 
 
     </main>
-    <footer role="content-info">
+    <footer role="contentinfo">
         <div class="api-display">
             <a href=" https://developer.nytimes.com">
                 <img class="nyt-api-image" src="https://developer.nytimes.com/files/poweredby_nytimes_65b.png?v=1539041445000">

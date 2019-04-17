@@ -34,7 +34,6 @@ function nytGetBooks(date, genreQuery) {
     })
     .then(responseJson => displayNYTResults(responseJson))
     .catch(err => {
-      console.log(err.message);
       $('#results-list').append(`
            <h2 class="list-fetch-error">Could not find a result, please try another combination.</h2>`  
         );
@@ -43,17 +42,8 @@ function nytGetBooks(date, genreQuery) {
 }
 
 function displayNYTResults(responseJson) {
-  console.log(responseJson);
   let listData = responseJson.results;
   $('#results-list').empty();
-  
-  //display each book, published date of list, and a clickable ISBN
-
-  // if (responseJson.num_results === 0) {
-  //   $('#results-list').append(`
-  //          <h2 class="list-fetch-error">Could not find a result, please try another combination.</h2>`  
-  //       )
-  // }
 
   $('#results-list').append(
     `<h2 class="list-title">${listData[0].list_name}</h2>
@@ -67,7 +57,7 @@ function displayNYTResults(responseJson) {
             
             <p> ${listData[j].book_details[0].author}</p>
           </div>
-            <button class="book-click">
+            <button role="button" class="book-click">
               <span class="book-click-exact">${listData[j].book_details[0].primary_isbn13}</span>
             </button>
         </li>`
@@ -101,7 +91,14 @@ function libCloudGetBooks(ISBNRef) {
         })
         .then(responseJson => displayLibResults(responseJson))
         .catch(err => {
-          console.log(err.message)
+          console.log(err.message);
+          $('#results-list').empty();
+          $('#results-list').append(
+            `<h2>Could not find that item, please try another.</h2>
+            <div class="back-button-div">
+              <button role="button" class="go-back-button">Go Back</button>
+            </div>`
+        )
         });
 }
 
@@ -110,23 +107,12 @@ function libCloudGetBooks(ISBNRef) {
 function displayLibResults(responseJson) {
     $('#results-list').empty();
 
-    //display error if no record found
-    if (!responseJson.items) {
-      $('#results-list').append(
-          `<h2>Could not find that item, please try another.</h2>
-          <div class="back-button-div">
-            <button class="go-back-button">Go Back</button>
-          </div>`
-      )
-    } else {
-      $('#results-list').append(`
-          <h2>See if it is available in Harvard's library system!</h2>
-          <div class="back-button-div">
-            <button class="go-back-button">Go Back</button>
-          </div>`
-      )
-    }
-
+    $('#results-list').append(`
+        <h2>See if it is available in Harvard's library system!</h2>
+        <div class="back-button-div">
+          <button role="button" class="go-back-button">Go Back</button>
+        </div>`
+    )
 
     const listData = responseJson.items.mods;
 
