@@ -74,7 +74,10 @@
     width: 80%;
     font-size: 16px;
     padding-right: 10px;
+  }
 
+  .book-description {
+    text-indent: 5px;
   }
 
   #results-list {
@@ -95,6 +98,10 @@
     letter-spacing: 1px;
     text-decoration: underline;
     clear: right;
+  }
+
+  #results-list > h2 {
+    text-align: center;
   }
 
 
@@ -257,10 +264,6 @@
 
     .container {
       max-width: 800px;
-    }
-
-    #results-list > h2 {
-      text-align: center;
     }
 
     #results-list > h3 {

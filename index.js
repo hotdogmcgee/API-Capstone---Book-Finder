@@ -35,6 +35,10 @@ function nytGetBooks(date, genreQuery) {
     .then(responseJson => displayNYTResults(responseJson))
     .catch(err => {
       console.log(err.message);
+      $('#results-list').append(`
+           <h2 class="list-fetch-error">Could not find a result, please try another combination.</h2>`  
+        );
+      $('#results').removeClass('hidden');
     });
 }
 
@@ -44,6 +48,13 @@ function displayNYTResults(responseJson) {
   $('#results-list').empty();
   
   //display each book, published date of list, and a clickable ISBN
+
+  // if (responseJson.num_results === 0) {
+  //   $('#results-list').append(`
+  //          <h2 class="list-fetch-error">Could not find a result, please try another combination.</h2>`  
+  //       )
+  // }
+
   $('#results-list').append(
     `<h2 class="list-title">${listData[0].list_name}</h2>
     <p class="published-date">Published on: ${responseJson.results[0].published_date}</p>`)
